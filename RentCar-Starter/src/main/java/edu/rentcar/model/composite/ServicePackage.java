@@ -1,33 +1,39 @@
-package edu.rentcar.model;
+package edu.rentcar.model.composite;
 
-import edu.rentcar.model.composite.ServiceComponent;
+import edu.rentcar.model.decorator.RentalService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicePackage implements ServiceComponent {
-    private String name;
-    private List<ServiceComponent> components = new ArrayList<>();
+public class ServicePackage implements RentalService {
+    private String nombre;
+    private double costoBase;
+    private List<RentalService> servicios = new ArrayList<>();
 
-    public ServicePackage(String name) {
-        this.name = name;
+    public ServicePackage(String nombre, double costoBase) {
+        this.nombre = nombre;
+        this.costoBase = costoBase;
     }
 
-    public void addComponent(ServiceComponent component) {
-        components.add(component);
+    public void addService(RentalService servicio) {
+        servicios.add(servicio);
     }
 
     @Override
     public String getDescription() {
-        StringBuilder desc = new StringBuilder(name + ": ");
-        for (ServiceComponent c : components) {
-            desc.append(c.getDescription()).append(" | ");
+        StringBuilder sb = new StringBuilder(nombre + " (costo base: $" + costoBase + ")");
+        for (RentalService s : servicios) {
+            sb.append("\n - ").append(s.getDescription());
         }
-        return desc.toString();
+        return sb.toString();
     }
 
     @Override
     public double getCost() {
-        return components.stream().mapToDouble(ServiceComponent::getCost).sum();
+        double total = costoBase;
+        for (RentalService s : servicios) {
+            total += s.getCost();
+        }
+        return total;
     }
 }
