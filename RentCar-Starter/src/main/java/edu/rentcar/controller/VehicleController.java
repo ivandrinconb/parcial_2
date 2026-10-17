@@ -1,6 +1,7 @@
 package edu.rentcar.controller;
 
 import edu.rentcar.app.ApplicationServices;
+import edu.rentcar.data.SampleData;
 import edu.rentcar.model.Vehicle;
 import edu.rentcar.service.VehicleService;
 import javafx.fxml.FXML;
@@ -13,6 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class VehicleController {
     private final VehicleService vehicleService = ApplicationServices.vehicleService();
+
+
+    private ReservationController reservationController;
 
     @FXML private TableView<Vehicle> vehicleTable;
     @FXML private TableColumn<Vehicle, String> vehicleIdColumn;
@@ -37,8 +41,10 @@ public class VehicleController {
         vehicleYearColumn.setCellValueFactory(new PropertyValueFactory<>("modelYear"));
         vehicleRateColumn.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
         vehicleStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
         vehicleCategoryCombo.getItems().setAll("Economy", "Executive", "Premium");
         vehicleCategoryCombo.getSelectionModel().selectFirst();
+
         refreshVehicleData();
     }
 
@@ -52,8 +58,19 @@ public class VehicleController {
                     vehicleYearField.getText(),
                     vehicleRateField.getText()
             );
+
+
+            SampleData.addVehicle(vehicle);
+
+
+            if (reservationController != null) {
+                reservationController.refreshVehiculos();
+            }
+
+
             refreshVehicleData();
             clearVehicleForm();
+
             showAlert(Alert.AlertType.INFORMATION, "Vehicle registered",
                     vehicle.getDisplayName() + " was registered successfully.");
         } catch (IllegalArgumentException exception) {
@@ -80,5 +97,10 @@ public class VehicleController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+
+    public void setReservationController(ReservationController reservationController) {
+        this.reservationController = reservationController;
     }
 }

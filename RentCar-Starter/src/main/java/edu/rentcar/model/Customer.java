@@ -6,12 +6,17 @@ public class Customer {
     private final String email;
     private final boolean authorized;
 
+
+
+
+
     public Customer(String id, String fullName, String email, boolean authorized) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.authorized = authorized;
     }
+
 
     public String getId() {
         return id;

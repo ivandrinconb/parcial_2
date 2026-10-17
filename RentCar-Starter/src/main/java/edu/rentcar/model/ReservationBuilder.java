@@ -14,6 +14,7 @@ public class ReservationBuilder {
     private RentalMode rentalMode;
     private List<RentalService> services;
 
+    // Métodos de configuración (builder pattern)
     public ReservationBuilder withCustomer(Customer customer) {
         this.customer = customer;
         return this;
@@ -40,6 +41,18 @@ public class ReservationBuilder {
         return this;
     }
 
+    // Construye un objeto Reservation completo
+    public Reservation build() {
+        if (customer == null || vehicle == null || startDate == null || endDate == null || rentalMode == null) {
+            throw new IllegalArgumentException("La reservación tiene información incompleta.");
+        }
+        if (endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio.");
+        }
+        return new Reservation(customer, vehicle, startDate, endDate, rentalMode, services);
+    }
+
+    // Genera descripción de la reserva
     public String buildDescription() {
         if (customer == null || vehicle == null || startDate == null || endDate == null || rentalMode == null) {
             throw new IllegalArgumentException("La reservación tiene información incompleta.");
@@ -49,7 +62,7 @@ public class ReservationBuilder {
         }
 
         StringBuilder desc = new StringBuilder("Reservación de " + customer.getFullName() +
-                " con vehículo " + vehicle.getModel() +
+                " con vehículo " + vehicle.getBrand() + " " + vehicle.getModel() +
                 " desde " + startDate + " hasta " + endDate +
                 " modalidad: " + rentalMode.getName());
 
@@ -62,6 +75,7 @@ public class ReservationBuilder {
         return desc.toString();
     }
 
+    // Calcula el costo total
     public double calculateTotalCost(double baseRate) {
         int days = (int) (endDate.toEpochDay() - startDate.toEpochDay());
         double cost = rentalMode.calculateCost(baseRate, days);
