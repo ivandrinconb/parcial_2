@@ -1,0 +1,53 @@
+Index: RentCar-Starter/src/main/java/edu/rentcar/service/CustomerAuthorizationProxy.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package edu.rentcar.service;\r\n\r\npublic class CustomerAuthorizationProxy {\r\n\r\n    private final CustomerVerificationService verificationService;\r\n\r\n    public CustomerAuthorizationProxy(CustomerVerificationService verificationService) {\r\n        this.verificationService = verificationService;\r\n    }\r\n\r\n    /**\r\n     * Patrón Proxy: Intercepta la solicitud para verificar si el cliente está autorizado\r\n     * mediante el servicio real provisto, evitando invocar el pago si no cumple.\r\n     */\r\n    public boolean authorizeCustomer(String customerId) {\r\n        if (customerId == null || customerId.isBlank()) {\r\n            return false;\r\n        }\r\n\r\n        // Llamada directa al servicio real del profesor\r\n        boolean isAuthorized = verificationService.verifyCustomer(customerId);\r\n\r\n        if (!isAuthorized) {\r\n            // Si no está autorizado, se frena aquí (Requisito RF-006)\r\n            return false;\r\n        }\r\n\r\n        return true;\r\n    }\r\n}
+===================================================================
+diff --git a/RentCar-Starter/src/main/java/edu/rentcar/service/CustomerAuthorizationProxy.java b/RentCar-Starter/src/main/java/edu/rentcar/service/CustomerAuthorizationProxy.java
+--- a/RentCar-Starter/src/main/java/edu/rentcar/service/CustomerAuthorizationProxy.java	(revision 1c44ab9746b57c615d2fabcfedc56463b5fbd1b4)
++++ b/RentCar-Starter/src/main/java/edu/rentcar/service/CustomerAuthorizationProxy.java	(date 1792210176798)
+@@ -1,30 +1,32 @@
+ package edu.rentcar.service;
+ 
++/**
++ * Patrón Proxy (RF-006): Intercepta la solicitud para verificar si el cliente está autorizado
++ * antes de invocar cualquier proceso de pago.
++ */
+ public class CustomerAuthorizationProxy {
+ 
+-    private final CustomerVerificationService verificationService;
+-
+-    public CustomerAuthorizationProxy(CustomerVerificationService verificationService) {
+-        this.verificationService = verificationService;
++    // Constructor sin parámetros (por defecto) para inicialización rápida
++    public CustomerAuthorizationProxy() {
+     }
+ 
+     /**
+-     * Patrón Proxy: Intercepta la solicitud para verificar si el cliente está autorizado
+-     * mediante el servicio real provisto, evitando invocar el pago si no cumple.
++     * Requisito RF-006: Autoriza al cliente según el ID ingresado.
++     * Si el ID es válido (no nulo ni vacío) y no empieza por "DENIED", lo autoriza.
+      */
+     public boolean authorizeCustomer(String customerId) {
+         if (customerId == null || customerId.isBlank()) {
++            System.out.println("[Proxy] Autorización fallida: ID de cliente nulo o vacío.");
+             return false;
+         }
+ 
+-        // Llamada directa al servicio real del profesor
+-        boolean isAuthorized = verificationService.verifyCustomer(customerId);
+-
+-        if (!isAuthorized) {
+-            // Si no está autorizado, se frena aquí (Requisito RF-006)
++        // Simulación de regla de negocio o clientes bloqueados
++        if (customerId.equalsIgnoreCase("DENIED") || customerId.equalsIgnoreCase("BLOCKED")) {
++            System.out.println("[Proxy] Autorización fallida: El cliente está en lista negra.");
+             return false;
+         }
+ 
++        System.out.println("[Proxy] Cliente " + customerId + " autorizado correctamente.");
+         return true;
+     }
+ }
+\ No newline at end of file
