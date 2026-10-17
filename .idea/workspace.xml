@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3b9ca68-a935-4db1-82f6-2d41a84eddac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/RentCar-Starter/src/main/java/edu/rentcar/model/Reservation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RentCar-Starter/src/main/java/edu/rentcar/data/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/RentCar-Starter/src/main/java/edu/rentcar/data/SampleData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RentCar-Starter/src/main/java/edu/rentcar/model/ReservationBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/RentCar-Starter/src/main/java/edu/rentcar/model/ReservationBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +95,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging ivan",
+    "git-widget-placeholder": "ivan",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/estef/OneDrive/Documentos/parcial_2",
