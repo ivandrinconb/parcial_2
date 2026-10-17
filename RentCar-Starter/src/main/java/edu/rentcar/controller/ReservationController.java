@@ -16,6 +16,7 @@ import edu.rentcar.model.decorator.GPSDecorator;
 import edu.rentcar.model.decorator.RentalService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -30,6 +31,7 @@ public class ReservationController {
     @FXML private Button btnCancelar;
     @FXML private Button btnConfirmarReserva;
     @FXML private Button btnDisponibilidad;
+    @FXML private Button btnPagar;
 
     @FXML private ComboBox<String> cbCliente;
     @FXML private ComboBox<String> cbMetodoPago;
@@ -139,6 +141,30 @@ public class ReservationController {
     }
 
     @FXML
+    void handlePagar(ActionEvent event) {
+        String metodo = cbMetodoPago.getValue();
+
+        if (metodo == null || metodo.trim().isEmpty()) {
+            mostrarAlerta("Atención", "Por favor, seleccione un método de pago antes de continuar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            mostrarAlerta("Pago Exitoso", "El pago con " + metodo + " ha sido procesado correctamente.", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo procesar el pago: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    @FXML
     void initialize() {
         refreshClientes();
         refreshVehiculos();
@@ -147,7 +173,6 @@ public class ReservationController {
         cbPaquetesServicio.getItems().addAll("Paquete Familiar", "Paquete Ejecutivo", "Paquete Completo");
         cbMetodoPago.getItems().addAll("Efectivo", "Tarjeta", "Transferencia");
     }
-
 
     public void refreshClientes() {
         cbCliente.getItems().clear();
