@@ -32,7 +32,7 @@ public class Reservation {
     public RentalMode getRentalMode() { return rentalMode; }
     public List<RentalService> getServices() { return services; }
 
-    
+
     public String getDescription() {
         StringBuilder desc = new StringBuilder("Reservación de " + customer.getFullName() +
                 " con vehículo " + vehicle.getBrand() + " " + vehicle.getModel() +
