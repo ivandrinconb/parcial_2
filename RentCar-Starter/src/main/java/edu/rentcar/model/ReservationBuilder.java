@@ -1,5 +1,8 @@
 package edu.rentcar.model;
 
+import edu.rentcar.model.abstractFactory.RentalMode;
+import edu.rentcar.model.decorator.RentalService;
+
 import java.time.LocalDate;
 import java.util.List;
 

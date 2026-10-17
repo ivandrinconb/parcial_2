@@ -1,4 +1,4 @@
-package edu.rentcar.model;
+package edu.rentcar.model.abstractFactory;
 
 public interface RentalMode {
     String getName();

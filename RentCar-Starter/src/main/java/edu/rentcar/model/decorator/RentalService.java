@@ -1,4 +1,4 @@
-package edu.rentcar.model;
+package edu.rentcar.model.decorator;
 
 public interface RentalService {
     String getDescription();
